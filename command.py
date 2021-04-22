@@ -8,3 +8,4 @@ class Command(Enum):
     LS = 3
     QUIT = 4
     ERROR = 5
+    OK = 6
