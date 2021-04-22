@@ -1,10 +1,10 @@
 # Socket Project
 
 ## Group Members
-* Richard Phan
+* Richard Phan (riichardphan@csu.fullerton.edu)
 
-## Note
-* the client and server use the same `socket_utils.py`
+## Language
+* python3
 
 ## Usage
 * `python server.py`
