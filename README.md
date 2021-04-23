@@ -2,6 +2,7 @@
 
 ## Group Members
 * Richard Phan (riichardphan@csu.fullerton.edu)
+* Ashkii Kadenehii (ashkii97@csu.fullerton.edu)
 
 ## Language
 * python3
