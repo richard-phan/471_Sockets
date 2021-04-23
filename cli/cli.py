@@ -2,6 +2,8 @@ import os
 import socket
 import sys
 
+sys.path.insert(1, '../utils')
+
 from command import Command
 from socket_utils import create_header, parse_header, recv
 
@@ -62,6 +64,8 @@ def get(client_socket, e_socket, filename):
     f.write(data)
     f.close()
 
+    print(f"Filename: {filename}, Bytes Transferred: {file_size}")
+
 # put command
 def put(client_socket, e_socket, filename):
     # open and read the file
@@ -83,6 +87,8 @@ def put(client_socket, e_socket, filename):
     # continuously send data to the server until all bytes have been sent
     while bytes_sent != len(data):
         bytes_sent += e_socket.send(bytes(data[bytes_sent:], 'utf-8'))
+
+    print(f"Filename: {filename}, Bytes Transferred: {bytes_sent}")
 
 # ls command
 def ls(client_socket, e_socket):

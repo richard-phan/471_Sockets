@@ -1,7 +1,11 @@
 import os
 import socket
+import sys
+
+sys.path.insert(1, '../utils')
 
 from command import Command
+# from socket_utils import create_header, parse_header, recv
 from socket_utils import create_header, parse_header, recv
 
 # get command
@@ -17,7 +21,7 @@ def get(main_socket, e_socket, filename):
         header = create_header(0, Command.ERROR)
         # send header to client
         main_socket.send(bytes(header, 'utf-8'))
-        return
+        return False
 
     # read the file data
     data = f.read()
@@ -36,6 +40,8 @@ def get(main_socket, e_socket, filename):
     # continuously send data to the server until all bytes have been sent
     while bytes_sent != len(data):
         bytes_sent += e_socket.send(bytes(data[bytes_sent:], 'utf-8'))
+
+    return True
 
 # put command
 def put(data):
@@ -110,19 +116,25 @@ while True:
 
         if cmd == Command.GET:
             filename = recv(main_socket, data_size)
-            get(main_socket, conn_socket, filename)
+            success = get(main_socket, conn_socket, filename)
+            if success:
+                print("GET Success")
+            else:
+                print("GET Failure")
         elif cmd == Command.PUT:
             # receive data from the client
             raw_data = recv(conn_socket, data_size)
             put(raw_data)
+            print("PUT Success")
         elif cmd == Command.LS:
             ls(conn_socket)
+            print("LS Success")
         elif cmd == Command.QUIT:
             main_socket.close()
             main_socket = None
             addr = None
             print('Client socket disconnected')
             continue
-
+        
         conn_socket.close()
         print('Ephemeral socket closed')
